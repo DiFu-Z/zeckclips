@@ -1,0 +1,82 @@
+{
+  "name": "zeckclips",
+  "productName": "ZeckClips",
+  "version": "1.0.0",
+  "description": "Convierte vídeos largos en clips verticales con subtítulos automáticos y títulos con IA.",
+  "author": {
+    "name": "ZeckClips",
+    "email": "zeckclips@example.com"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "node scripts/fetch-bins.mjs && electron .",
+    "web": "node scripts/fetch-bins.mjs && node server.js",
+    "bins": "node scripts/fetch-bins.mjs",
+    "dist:mac": "node scripts/fetch-bins.mjs mac && electron-builder --mac --x64 --arm64",
+    "dist:win": "node scripts/fetch-bins.mjs win && electron-builder --win --x64",
+    "dist:linux": "node scripts/fetch-bins.mjs linux && electron-builder --linux --x64 --arm64"
+  },
+  "devDependencies": {
+    "electron": "44.7.1",
+    "electron-builder": "26.17.0"
+  },
+  "build": {
+    "appId": "com.zeckclips.app",
+    "productName": "ZeckClips",
+    "copyright": "© ZeckClips",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "server.js",
+      "app/**",
+      "build/icon.png"
+    ],
+    "extraResources": [
+      {
+        "from": "bin/${os}-${arch}",
+        "to": "bin"
+      }
+    ],
+    "artifactName": "ZeckClips-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.video",
+      "icon": "build/icon.png",
+      "identity": "-",
+      "hardenedRuntime": false
+    },
+    "dmg": {
+      "title": "ZeckClips ${version}"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "ZeckClips"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "AudioVideo",
+      "icon": "build/icon.png",
+      "maintainer": "ZeckClips <zeckclips@example.com>",
+      "synopsis": "Clips verticales con subtítulos automáticos"
+    }
+  }
+}
