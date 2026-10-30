@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZeckClips</title>
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Anton&family=Bangers&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 
@@ -16,7 +17,8 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,sans-serif}
 header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
-.logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo b{color:var(--acc)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.5px}.logo b{color:#FF7A00}
+.logo img{width:36px;height:36px;display:block}
 .steps{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
 .steps span{padding:5px 10px;border-radius:99px;background:var(--panel);color:var(--mut);font-size:12px}
 .steps span.on{background:var(--acc);color:#111;font-weight:600}
@@ -69,7 +71,7 @@ button.sec{background:var(--acc2);border-color:var(--acc2);color:#fff}
 </head>
 <body>
 <header>
-  <div class="logo">Zeck<b>Clips</b></div>
+  <div class="logo"><img src="logo.svg" alt=""><span>Zeck<b>Clips</b></span></div>
   <div class="steps"><span id="st1" class="on">1 · Vídeo</span><span id="st2">2 · Preferencias</span><span id="st3">3 · Clips</span><span id="st4">4 · Editar y exportar</span></div>
 </header>
 <main>
