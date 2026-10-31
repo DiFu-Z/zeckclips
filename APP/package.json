@@ -7,6 +7,12 @@
     "name": "ZeckClips",
     "email": "zeckclips@example.com"
   },
+  "homepage": "https://github.com/DiFu-Z/zeckclips",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiFu-Z/zeckclips.git",
+    "directory": "APP"
+  },
   "license": "UNLICENSED",
   "private": true,
   "main": "main.js",
