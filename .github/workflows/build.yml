@@ -1,17 +1,21 @@
 # Genera los instaladores de ZeckClips para Windows, macOS (Intel y Apple Silicon) y Linux.
-# Se ejecuta al subir a main un cambio de "version" en package.json (crea la versión v<versión>),
+# El proyecto está en APP/. Se ejecuta al subir a main un cambio de "version" en APP/package.json (crea la versión v<versión>),
 # al publicar una etiqueta v* (p. ej. v1.0.0) o a mano desde la pestaña Actions.
 name: Instaladores
 
 on:
   push:
     branches: [main]
-    paths: [package.json, .github/workflows/build.yml]
+    paths: [APP/package.json, .github/workflows/build.yml]
     tags: ["v*"]
   workflow_dispatch:
 
 permissions:
   contents: write
+
+defaults:
+  run:
+    working-directory: APP
 
 jobs:
   build:
@@ -32,6 +36,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: APP/package-lock.json
       - run: npm ci
       - run: npm run ${{ matrix.dist }} -- --publish never
         env:
@@ -40,11 +45,11 @@ jobs:
         with:
           name: ZeckClips-${{ runner.os }}
           path: |
-            dist/*.dmg
-            dist/*.zip
-            dist/*.exe
-            dist/*.AppImage
-            dist/*.deb
+            APP/dist/*.dmg
+            APP/dist/*.zip
+            APP/dist/*.exe
+            APP/dist/*.AppImage
+            APP/dist/*.deb
           if-no-files-found: error
 
   release:
@@ -57,11 +62,11 @@ jobs:
         run: echo "tag=v$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
       - uses: actions/download-artifact@v4
         with:
-          path: out
+          path: ${{ github.workspace }}/out
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || steps.v.outputs.tag }}
           name: ZeckClips ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || steps.v.outputs.tag }}
           target_commitish: ${{ github.sha }}
-          files: out/*
+          files: ${{ github.workspace }}/out/*
