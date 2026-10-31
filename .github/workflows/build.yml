@@ -1,9 +1,12 @@
 # Genera los instaladores de ZeckClips para Windows, macOS (Intel y Apple Silicon) y Linux.
-# Se ejecuta al publicar una etiqueta v* (p. ej. v1.0.0) o a mano desde la pestaña Actions.
+# Se ejecuta al subir a main un cambio de "version" en package.json (crea la versión v<versión>),
+# al publicar una etiqueta v* (p. ej. v1.0.0) o a mano desde la pestaña Actions.
 name: Instaladores
 
 on:
   push:
+    branches: [main]
+    paths: [package.json, .github/workflows/build.yml]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -45,15 +48,20 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: echo "tag=v$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
       - uses: actions/download-artifact@v4
         with:
           path: out
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || steps.v.outputs.tag }}
+          name: ZeckClips ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || steps.v.outputs.tag }}
+          target_commitish: ${{ github.sha }}
           files: out/*
-          draft: true

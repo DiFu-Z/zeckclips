@@ -29,9 +29,11 @@ Todo viene incluido (ffmpeg y yt-dlp): no hay que instalar nada más. Los vídeo
 
 Los instaladores de cada sistema se generan en ese sistema. La forma más fácil es **GitHub Actions**, que los crea los tres a la vez:
 
-1. Sube el proyecto a un repositorio de GitHub.
-2. Crea una etiqueta de versión: `git tag v1.0.0 && git push --tags`
-3. En la pestaña *Actions* se generan los instaladores; al terminar aparecen en *Releases* como borrador, listos para publicar.
+1. Cambia `"version"` en `package.json` (p. ej. `1.0.2`).
+2. Sube el cambio a la rama `main` (con GitHub Desktop: *Commit* y *Push origin*).
+3. En la pestaña *Actions* se generan los instaladores; al terminar aparecen publicados en *Releases* como versión `v1.0.2`.
+
+También vale crear una etiqueta `v1.0.2` y subirla.
 
 También se puede lanzar a mano desde *Actions → Instaladores → Run workflow* (los archivos quedan en *Artifacts*).
 
