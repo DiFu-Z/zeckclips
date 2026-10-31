@@ -27,7 +27,7 @@ jobs:
             dist: dist:mac
           - os: windows-latest
             dist: dist:win
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             dist: dist:linux
     runs-on: ${{ matrix.os }}
     steps:
